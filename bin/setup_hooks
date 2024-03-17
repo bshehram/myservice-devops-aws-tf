@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# This script will install a simple git pre-commit hook in the .git/hooks folder of this repo. 
+#
+# You only need to run this script once after cloning the repo. 
+#
+# basit@shehramcom
+
+cat > "$(git rev-parse --show-toplevel)/.git/hooks/pre-commit" <<EOF
+#!/bin/sh
+
+echo "Formatting Terraform files..."
+echo "Current working dir is \$(pwd)..."
+for file in \$(git diff --name-only --staged); do
+	if [[ "\${file}" = *.tf || "\${file}" = *.tfvars ]]; then
+		terraform fmt "\${file}"
+		git add "\${file}"
+	fi
+done
+echo "Done formatting Terraform files!"
+
+EOF
+
+chmod +x "$(git rev-parse --show-toplevel)/.git/hooks/pre-commit"

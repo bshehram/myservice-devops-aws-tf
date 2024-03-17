@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# build-image script for Packer 
+#
+# basit@shehram.com
+
+set -e
+
+if [ "$#" -ne 2 ]; then
+    echo >&2 "Usage: $0 <image> <version>"
+    exit 1
+fi
+
+image="$1"
+version="$2"
+
+# if you are in the vpn/priv you can use the following (also note to change to ssh_interface to private_ip in amis/myservice.json)
+#source_ip="10.0.0.0/8"
+
+# otherwise use this for packer to ssh to the instance from your public ip
+source_ip=`curl -s ipinfo.io|jq -r .ip`
+
+packer build -var "version=${version}" -var "source_ip=${source_ip}" "amis/${image}.json"

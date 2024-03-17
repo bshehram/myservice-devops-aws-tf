@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "version": null,
+    "source_ip": null
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "us-west-2",
+      "subnet_id": "subnet-6942042069",
+      "ssh_interface": "public_ip",
+      "ami_name": "myservice-{{user `version`}}",
+      "ami_description": "myservice-{{user `version`}}",
+      "source_ami_filter": {
+        "filters": {
+          "name": "amzn2-ami-hvm-*-arm64-gp2"
+        },
+        "owners": ["amazon"],
+        "most_recent": true
+      },
+      "instance_type": "t4g.medium",
+      "ssh_username": "ec2-user",
+      "temporary_security_group_source_cidrs": "{{user `source_ip`}}",
+      "tags": {
+        "Name": "myservice-{{user `version`}}"
+      },
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/xvda",
+          "delete_on_termination": true,
+          "volume_size": 10,
+          "volume_type": "gp2"
+        }
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo bash -c \"echo -e '* soft nofile 65535\n* hard nofile 65535' > /etc/security/limits.d/21-nofile.conf\"",
+        "sudo yum groupinstall -y 'Development Tools'",
+        "sudo yum upgrade -y"
+      ]
+    }
+  ]
+}
