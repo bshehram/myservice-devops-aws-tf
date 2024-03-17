@@ -1,4 +1,5 @@
-# MyService Terraform configuration that deploys an EC2 instance, ALB load balancer, Aurora RDS database, security groups, builds AMIs and provisions an ACM Certificate
+# MyService Terraform 
+### A configuration set that deploys an EC2 instance, ALB load balancer, Aurora RDS database, security groups, builds AMIs and provisions an ACM Certificate.
 
 ## Required local variables in variables.tf
 
