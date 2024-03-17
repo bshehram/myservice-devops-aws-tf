@@ -9,6 +9,13 @@ resource "aws_security_group" "myservice" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
+    cidr_blocks = ["${local.my_ip}"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["10.0.0.0/8"]
   }
 
@@ -35,11 +42,11 @@ resource "aws_alb_target_group" "myservice" {
   deregistration_delay = 0
 
   health_check {
-    matcher             = 200
-    healthy_threshold   = 2
-    unhealthy_threshold = 4
-    interval            = 120
-    timeout             = 60
+    matcher             = 200 # The HTTP codes to use when checking for a successful response from a target
+    healthy_threshold   = 2   # The number of consecutive health checks successes required before considering an unhealthy target healthy
+    unhealthy_threshold = 4   # The number of consecutive health check failures required before considering the target unhealthy
+    interval            = 120 # The approximate amount of time, in seconds, between health checks of an individual target
+    timeout             = 60  # The amount of time, in seconds, during which no response means a failed health check
   }
 }
 
@@ -110,7 +117,7 @@ resource "aws_instance" "myservice" {
   instance_type          = local.myservice_instance_type
   iam_instance_profile   = aws_iam_instance_profile.myservice.name
   monitoring             = true
-  subnet_id              = element(flatten([local.public_subnet_ids]), 0)
+  subnet_id              = element(flatten([local.public_subnet_ids]), 0) # Picks the first public subnet from the list public_subnet_ids or private_subnet_ids
   vpc_security_group_ids = [aws_security_group.myservice.id]
   ebs_optimized          = true
   key_name               = local.myservice_key_name
@@ -124,7 +131,6 @@ resource "aws_instance" "myservice" {
       ami,
     ]
   }
-
 }
 
 # Select MyService AMI built from Packer

@@ -31,59 +31,59 @@ resource "aws_security_group" "alb_pub" {
   }
 }
 
-# Create Private ALB Security Group
-#
-resource "aws_security_group" "alb_priv" {
-  name        = "myservice-alb-priv"
-  description = "myservice-alb-priv"
-  vpc_id      = local.vpc_id
+# # Create Private ALB Security Group
+# #
+# resource "aws_security_group" "alb_priv" {
+#   name        = "myservice-alb-priv"
+#   description = "myservice-alb-priv"
+#   vpc_id      = local.vpc_id
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
+#   ingress {
+#     from_port   = 80
+#     to_port     = 80
+#     protocol    = "tcp"
+#     cidr_blocks = ["10.0.0.0/8"]
+#   }
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
+#   ingress {
+#     from_port   = 443
+#     to_port     = 443
+#     protocol    = "tcp"
+#     cidr_blocks = ["10.0.0.0/8"]
+#   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-  tags = {
-    Name = "myservice-alb-priv"
-  }
-}
+#   tags = {
+#     Name = "myservice-alb-priv"
+#   }
+# }
 
-# Create Private ALB 
-#
-resource "aws_alb" "alb_priv" {
-  name = "myservice-priv"
+# # Create Private ALB 
+# #
+# resource "aws_alb" "alb_priv" {
+#   name = "myservice-priv"
 
-  security_groups = [aws_security_group.alb_priv.id]
+#   security_groups = [aws_security_group.alb_priv.id]
 
-  subnets  = local.private_subnet_ids
-  internal = true
+#   subnets  = local.private_subnet_ids
+#   internal = true
 
-  timeouts {
-    create = "30m"
-    update = "30m"
-    delete = "30m"
-  }
+#   timeouts {
+#     create = "30m"
+#     update = "30m"
+#     delete = "30m"
+#   }
 
-  tags = {
-    Name = "myservice-alb-priv"
-  }
-}
+#   tags = {
+#     Name = "myservice-alb-priv"
+#   }
+# }
 
 # Create Public ALB 
 #
@@ -106,23 +106,23 @@ resource "aws_alb" "alb_pub" {
   }
 }
 
-# Create Private ALB HTTP Listener
-#
-resource "aws_alb_listener" "alb_priv_http" {
-  load_balancer_arn = aws_alb.alb_priv.arn
-  port              = 80
-  protocol          = "HTTP"
+# # Create Private ALB HTTP Listener
+# #
+# resource "aws_alb_listener" "alb_priv_http" {
+#   load_balancer_arn = aws_alb.alb_priv.arn
+#   port              = 80
+#   protocol          = "HTTP"
 
-  default_action {
-    type = "redirect"
+#   default_action {
+#     type = "redirect"
 
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
+#     redirect {
+#       port        = "443"
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }
 
 # Create Public ALB HTTP Listener
 #
@@ -142,26 +142,26 @@ resource "aws_alb_listener" "alb_pub_http" {
   }
 }
 
-# Create Private ALB HTTPS Listener
-#
-resource "aws_alb_listener" "alb_priv_https" {
-  load_balancer_arn = aws_alb.alb_priv.arn
-  port              = 443
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate_validation.acm.certificate_arn
+# # Create Private ALB HTTPS Listener
+# #
+# resource "aws_alb_listener" "alb_priv_https" {
+#   load_balancer_arn = aws_alb.alb_priv.arn
+#   port              = 443
+#   protocol          = "HTTPS"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn   = aws_acm_certificate_validation.acm.certificate_arn
 
-  default_action {
-    type = "redirect"
+#   default_action {
+#     type = "redirect"
 
-    redirect {
-      host        = local.domain
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
+#     redirect {
+#       host        = local.domain
+#       port        = "443"
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }
 
 # Create Public ALB HTTPS Listener
 #

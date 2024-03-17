@@ -1,4 +1,4 @@
-# MyService Terraform configuration that provisions an EC2 instance, Pub & Priv ALBs, an Aurora RDS cluster, security groups, AMIs and an ACM Certificate
+# MyService Terraform configuration that deploys an EC2 instance, ALB load balancer, Aurora RDS database, security groups, builds AMIs and provisions an ACM Certificate
 
 ## Local required variables in variables.tf
 
@@ -13,3 +13,6 @@
 - **`myservice_db_instance_class`**: The database instance class for the myservice database.
 - **`myservice_db_instance_count`**: The number of database instances for myservice.
 
+## Building the MyService AMI
+
+### In the images folder there is a script to build an AMI using the Packer json configuration, example: `./bin/build-image myservice 20240316.01`
