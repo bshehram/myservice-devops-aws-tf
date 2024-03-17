@@ -3,7 +3,7 @@ output "myservice" {
 }
 
 output "myservice_ec2" {
-  value = aws_route53_record.ec2.fqdn
+  value = aws_route53_record.myservice_ec2.fqdn
 }
 
 output "myservice_db" {

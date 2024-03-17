@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# build-image script for Packer 
+# build-image script for Packer v1.10.2 HCL2
 #
 # basit@shehram.com
 
@@ -20,4 +20,4 @@ version="$2"
 # otherwise use this for packer to ssh to the instance from your public ip
 source_ip=`curl -s ipinfo.io|jq -r .ip`
 
-packer build -var "version=${version}" -var "source_ip=${source_ip}" "amis/${image}.json"
+packer build -var "version=${version}" -var "source_ip=${source_ip}" "${image}.pkr.hcl"

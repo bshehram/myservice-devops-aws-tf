@@ -8,8 +8,9 @@ locals {
   private_subnet_ids  = ["subnet-789ghi", "subnet-012jkl", "subnet-161718", "subnet-192021"] # The IDs of the private subnets in the vpc
   internal_subnet_ids = ["subnet-345mno", "subnet-678pqr", "subnet-222324", "subnet-252627"] # The IDs of the internal subnets in the vpc
 
-  myservice_key_name          = "myservice"     # The key name used for the myservice instance
-  myservice_instance_type     = "t4g.medium"    # The instance type used for the myservice instance
-  myservice_db_instance_class = "db.t4g.medium" # The instance class used for the myservice database instance
-  myservice_db_instance_count = "3"             # The number of database instances for myservice
+  myservice_key_name          = "myservice"                          # The key name used for the myservice instance
+  myservice_key_pub           = "ssh-rsa AAAAexample420696969696969" # Public key for the myservice instance
+  myservice_instance_type     = "t4g.medium"                         # The instance type used for the myservice instance
+  myservice_db_instance_class = "db.t4g.medium"                      # The instance class used for the myservice database instance
+  myservice_db_instance_count = "3"                                  # The number of database instances for myservice
 }

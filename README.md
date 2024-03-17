@@ -15,4 +15,7 @@
 
 ## Building the MyService AMI
 
-### In the images folder there is a script to build an AMI using the Packer json configuration, example: `./bin/build-image myservice 20240316.01`
+### To build the MyService AMI using the `myservice.pkr.hcl` file run (v1.10.2): 
+```
+./bin/build-image myservice 20240316.01
+```

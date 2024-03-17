@@ -120,7 +120,7 @@ resource "aws_instance" "myservice" {
   subnet_id              = element(flatten([local.public_subnet_ids]), 0) # Picks the first public subnet from the list public_subnet_ids or private_subnet_ids
   vpc_security_group_ids = [aws_security_group.myservice.id]
   ebs_optimized          = true
-  key_name               = local.myservice_key_name
+  key_name               = aws_key_pair.myservice.key_name # use the key pair created from resource below or use local.key_name
 
   tags = {
     Name = "myservice"
@@ -133,6 +133,13 @@ resource "aws_instance" "myservice" {
   }
 }
 
+# Create MyService Key Pair
+#
+resource "aws_key_pair" "myservice" {
+  key_name   = "myservice"
+  public_key = local.myservice_key_pub
+}
+
 # Select MyService AMI built from Packer
 #
 data "aws_ami" "myservice" {
@@ -141,7 +148,7 @@ data "aws_ami" "myservice" {
     values = ["myservice-*"]
   }
 
-  owners      = ["42069696969"] # Replace with your AWS account ID
+  owners      = ["420694206942069"] # Replace with your AWS account ID
   most_recent = true
 }
 

@@ -91,7 +91,7 @@ resource "aws_rds_cluster_instance" "db" {
 
 # Create DB DNS Entries
 #
-resource "aws_route53_record" "db" {
+resource "aws_route53_record" "myservice_db" {
   zone_id = local.zone_id
   name    = "myservice-db"
   type    = "CNAME"
@@ -100,7 +100,7 @@ resource "aws_route53_record" "db" {
   records = [aws_rds_cluster.db.endpoint]
 }
 
-resource "aws_route53_record" "db_reader" {
+resource "aws_route53_record" "myservice_db_reader" {
   zone_id = local.zone_id
   name    = "myservice-db-reader"
   type    = "CNAME"
