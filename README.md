@@ -1,4 +1,4 @@
-# MyService Terraform configuration for an AWS account that provisions an EC2 instance, a Public and Private ALB, an Aurora RDS cluster and all related security groups, AMIs and an ACM Certificate
+# MyService Terraform configuration that provisions an EC2 instance, Pub & Priv ALBs, an Aurora RDS cluster, security groups, AMIs and an ACM Certificate
 
 ## Local required variables in variables.tf
 
