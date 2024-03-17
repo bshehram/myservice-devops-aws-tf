@@ -29,10 +29,10 @@
 
 - 1. Update the variables.tf file with correct and valid values (see list above).
 - 2. Determine if you need either/both pub and priv ALBs and adjust alb.tf and ec2.tf accordingly (including DNS at bottom).
-- 2. Update ec2.tf with your actual AWS account on line 151 and confirm you want to create new or use existing key.
-- 3. Update myservice.pkr.hcl with a public subnet on line 44 and with any commands needed
-- 4. Run the `./bin/build-image myservice 20240317.01` command to create a new AMI with Packer
-- 5. Run `terraform apply` and it should end up creating 30 resources (as currently configured).
+- 3. Update ec2.tf with your actual AWS account on line 151 and confirm you want to create new or use existing key.
+- 4. Update myservice.pkr.hcl with a public subnet on line 44 and with any commands needed
+- 5. Run the `./bin/build-image myservice 20240317.01` command to create a new AMI with Packer
+- 6. Run `terraform apply` and it should end up creating 30 resources (as currently configured).
 
 ## Compatibility
 
