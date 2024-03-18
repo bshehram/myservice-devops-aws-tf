@@ -8,9 +8,9 @@
 - **`zone_id`**: The Hosted Zone ID for the specified domain in Route 53, used for DNS record management.
 - **`my_ip`**: Your local outbound public IP to add to security groups.
 
-- **`public_subnet_ids`**: A list of subnet IDs for public-facing resources within the VPC.
-- **`private_subnet_ids`**: A list of subnet IDs for private resources without direct internet access.
-- **`internal_subnet_ids`**: A list of subnet IDs for internal resources accessible from the private subnets.
+- **`public_subnet_ids`**: A list of subnet IDs for public-facing resources within the VPC (for alb or ec2).
+- **`private_subnet_ids`**: A list of subnet IDs for private resources without direct internet access (for alb or ec2).
+- **`internal_subnet_ids`**: A list of subnet IDs for internal resources accessible from the private subnets (for rds).
 
 - **`myservice_key_name`**: The key pair name already in AWS for SSH access to the myservice instance (optional unless enabled in ec2.tf).
 - **`myservice_key_pub`**: The key pair public key to create in AWS for SSH access to the myservice instance (default setting in ec2.tf).
